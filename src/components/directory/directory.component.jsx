@@ -53,8 +53,15 @@ class Directory extends React.Component {
     render() {
         return (
             <div className='directory-menu'>
+                {/*
                 {this.state.sections.map(({title, subtitle, imageUrl, size, id}) => (
                     <MenuItem key={id} title={title} subtitle={subtitle} imageUrl={imageUrl} size={size}/>
+                ))}
+                */}
+                { /* Following is short-hand way of writing above. This will destructure off
+                all the props and set them as props with the same name as in the passed object */
+                this.state.sections.map(({id, ...otherSectionProps}) => (
+                    <MenuItem key={id} {...otherSectionProps}/>
                 ))}
             </div>
         )
