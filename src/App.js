@@ -2,18 +2,20 @@ import React from 'react';
 
 import { 
   Switch,
-  Route,
-  Link
+  Route
 } from 'react-router-dom'
 
 import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
+import Header from './components/header/header.component';
 
 function App() {
   return (
     <div className="App">
+        {/** Header is outside of Switch and Routes so will always render */}
+        <Header />
         {/*
           A <Switch> looks through all its children <Route>
           elements and renders the first one whose path
