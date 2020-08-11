@@ -25,7 +25,7 @@ class App extends React.Component {
 
   unsubscribeFromAuth = null
 
-  componentDidMount() {
+  componentDidMount() { 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       // Check userAuth not null i.e. signing out
       if( userAuth) {
