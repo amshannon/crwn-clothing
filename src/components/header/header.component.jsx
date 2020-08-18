@@ -9,6 +9,9 @@ import { connect } from 'react-redux';
 
 import { auth } from '../../firebase/firebase.utils';
 
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
+
 /**
  * Below is special syntax in React for importing SVG in React.
  * The ReactComponent import name is special and tells Create React App
@@ -17,7 +20,7 @@ import { auth } from '../../firebase/firebase.utils';
  */
 import { ReactComponent as Logo } from '../../assets/crown.svg' 
  
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden}) => (
     <div className='header'>
         <Link className='logo-container' to="/" >
             <Logo className='logo' />
@@ -38,13 +41,20 @@ const Header = ({ currentUser }) => (
                     <Link className='option' to='/signin'>SIGN IN</Link>
                 )
             }
+            <CartIcon />
         </div>
+        {
+            hidden ? null : <CartDropdown />
+        }
+        
     </div>
 )
 
 // state is top-level root reducer
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
+// { user: {currentUser }, cart: { hidden } } - this is NESTED DESTRUCTURING syntax
+const mapStateToProps = ({ user: {currentUser }, cart: { hidden } }) => ({
+    currentUser,
+    hidden
 })
 
 // connect is a higher order function
