@@ -4,6 +4,9 @@ import './header.styles.scss';
 
 import { Link } from 'react-router-dom';
 
+// connect is a higher order function
+import { connect } from 'react-redux';
+
 import { auth } from '../../firebase/firebase.utils';
 
 /**
@@ -27,13 +30,22 @@ const Header = ({ currentUser }) => (
                 CONTACT
             </Link>
             {
-                currentUser ?
-                <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div>
-                :
-                <Link className='option' to='/signin'>SIGN IN</Link>
+                currentUser ? (
+                    <div className='option' onClick={() => auth.signOut()}>
+                        SIGN OUT
+                    </div>
+                ) : (
+                    <Link className='option' to='/signin'>SIGN IN</Link>
+                )
             }
         </div>
     </div>
 )
 
-export default Header;
+// state is top-level root reducer
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+})
+
+// connect is a higher order function
+export default connect(mapStateToProps)(Header);
