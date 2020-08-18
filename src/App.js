@@ -2,7 +2,8 @@ import React from 'react';
 
 import { 
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom'
 
 import { connect } from 'react-redux';
@@ -72,13 +73,29 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
-          <Route path="/signin" component={SignInAndSignUpPage} />
+          {/* Below only render SIgnInAndSignUpPage if there is no currentUser*/}
+          <Route 
+            exact 
+            path="/signin" 
+            render={() => 
+              this.props.currentUser ? (
+                // redirects to homepage
+                <Redirect to='/' />
+              ) : (
+                <SignInAndSignUpPage />
+              )
+            } 
+          />
         </Switch>
       </div>
     );
   }
   
 }
+
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+})
 
 const mapDispatchToProps = dispatch => ({
   /*
@@ -89,4 +106,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 // connect is higher order function
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
