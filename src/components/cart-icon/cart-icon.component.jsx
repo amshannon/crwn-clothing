@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect';
 
 import { toggleCartHidden } from '../../redux/cart/cart.actions'
 import { selectCartItemsCount } from '../../redux/cart/cart.selectors'
@@ -21,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 //const mapStateToProps = ({ cart: { cartItems }}) => ({
-    const mapStateToProps = state => ({
+    const mapStateToProps = createStructuredSelector({
 /*
     Below is a SELECTOR - code that gets a state and then pulls off 
     just a slice of the state. Computing a new value based on the state.
@@ -41,7 +42,7 @@ const mapDispatchToProps = dispatch => ({
     get item count from memoized selector (using reselect library)
     need to pass the state to the selector
     */
-    itemCount: selectCartItemsCount(state)
+    itemCount: selectCartItemsCount
 })
 
 export default connect(

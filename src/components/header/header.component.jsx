@@ -6,11 +6,13 @@ import { Link } from 'react-router-dom';
 
 // connect is a higher order function
 import { connect } from 'react-redux';
-
+import { createStructuredSelector } from 'reselect';
+ 
 import { auth } from '../../firebase/firebase.utils';
-
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
+import { selectCartHidden } from '../../redux/cart/cart.selectors';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 /**
  * Below is special syntax in React for importing SVG in React.
@@ -52,9 +54,9 @@ const Header = ({ currentUser, hidden}) => (
 
 // state is top-level root reducer
 // { user: {currentUser }, cart: { hidden } } - this is NESTED DESTRUCTURING syntax
-const mapStateToProps = ({ user: {currentUser }, cart: { hidden } }) => ({
-    currentUser,
-    hidden
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+    hidden: selectCartHidden
 })
 
 // connect is a higher order function
