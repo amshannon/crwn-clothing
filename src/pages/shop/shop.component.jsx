@@ -4,16 +4,16 @@ import { Route } from 'react-router-dom';
 import CollectionsOverview from '../../components/collections-overview/collections-overview.component';
 import CollectionPage from '../collection/collection.component';
 
-import './shop.styles.scss';
+import { ShopPageContainer } from './shop.styles';
 
 const ShopPage = ({ match }) => {
     console.log({match})
     
     return (
-    <div className='shop-page'>
+    <ShopPageContainer>
         <Route exact path={`${match.path}`} component={CollectionsOverview} />
         <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
-    </div>
+    </ShopPageContainer>
 )};
 
 export default ShopPage;

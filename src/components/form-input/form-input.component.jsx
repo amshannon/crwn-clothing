@@ -1,10 +1,14 @@
 import React from 'react';
 
-import './form-input.styles.scss';
+import {
+    GroupContainer,
+    FormInputContainer,
+    FormInputLabel
+} from './form-input.styles';
 
 const FormInput = ({handleChange, label, ...otherProps}) => (
-    <div className="group">
-        <input className="form-input" onChange={handleChange} {...otherProps}></input>
+    <GroupContainer>
+        <FormInputContainer onChange={handleChange} {...otherProps}></FormInputContainer>
         {
             /**
              * Below label is only added if the developer has provided a label for the 
@@ -13,16 +17,16 @@ const FormInput = ({handleChange, label, ...otherProps}) => (
              * always applied.
              */
             label ? (
-                <label 
+                <FormInputLabel 
                     className={`${
                         otherProps.value.length ? 'shrink' : ''
                     } form-input-label`}
                 >
                     {label}
-                </label>
+                </FormInputLabel>
             ) : null
         }
-    </div>
+    </GroupContainer>
 );
 
 export default FormInput;
