@@ -76,19 +76,28 @@ export const convertCollectionsSnapshotToMap = (collections) => {
   }, {});
 }
 
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject)
+  });
+}
+
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-const provider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 /*
 * providing prompt: 'select_account' means we will always trigger the google popup
 * whenever using the GoogleAuthProvider for authentication and sign in.
 */
-provider.setCustomParameters({ prompt: 'select_account' }); 
+googleProvider.setCustomParameters({ prompt: 'select_account' }); 
 /*
 * export sign in with google method. The auth.signInWithPopup can take argument for
 * many types of sign in. 
 */
-export const signInWithGoogle = () => auth.signInWithPopup(provider); 
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider); 
 
 export default firebase; // in case we need access to whole library
