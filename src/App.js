@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { 
   Switch,
@@ -20,64 +20,43 @@ import Header from './components/header/header.component';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
-class App extends React.Component {
+const App = ({ checkUserSession, currentUser }) => {
 
-  /*
-  Don't need constructor any more as we have now connected redux to 
-  set the currentUser. setState code is replaced with setCurrentUser 'action' code
-  */
-  /*constructor() {
-    super();
-
-    this.state = {
-      currentUser: null
-    }
-  }*/
-
-  unsubscribeFromAuth = null
-
-  componentDidMount() {
-    const { checkUserSession } = this.props;
+  useEffect(() => {
     checkUserSession();
-  }
+  }, [checkUserSession]);
 
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
-
-  render() {
-    return (
-      <div className="App">
-        {/** Header is outside of Switch and Routes so will always render */}
-        <Header />
-        {/*
-          A <Switch> looks through all its children <Route>
-          elements and renders the first one whose path
-          matches the current URL. Use a <Switch> any time
-          you have multiple routes, but you want only one
-          of them to render at a time
-        */}
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/shop" component={ShopPage} />
-          <Route exact path="/checkout" component={CheckoutPage} />
-          {/* Below only render SIgnInAndSignUpPage if there is no currentUser*/}
-          <Route 
-            exact 
-            path="/signin" 
-            render={() => 
-              this.props.currentUser ? (
-                // redirects to homepage
-                <Redirect to='/' />
-              ) : (
-                <SignInAndSignUpPage />
-              )
-            } 
-          />
-        </Switch>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      {/** Header is outside of Switch and Routes so will always render */}
+      <Header />
+      {/*
+        A <Switch> looks through all its children <Route>
+        elements and renders the first one whose path
+        matches the current URL. Use a <Switch> any time
+        you have multiple routes, but you want only one
+        of them to render at a time
+      */}
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/shop" component={ShopPage} />
+        <Route exact path="/checkout" component={CheckoutPage} />
+        {/* Below only render SIgnInAndSignUpPage if there is no currentUser*/}
+        <Route 
+          exact 
+          path="/signin" 
+          render={() => 
+            currentUser ? (
+              // redirects to homepage
+              <Redirect to='/' />
+            ) : (
+              <SignInAndSignUpPage />
+            )
+          } 
+        />
+      </Switch>
+    </div>
+  );
   
 }
 
